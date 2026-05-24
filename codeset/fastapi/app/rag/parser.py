@@ -17,7 +17,7 @@ def fetch_report_list(corp_code: str, bgn_de: str, end_de: str, pblntf_ty: str =
         "bgn_de": bgn_de,
         "end_de": end_de,
         "pblntf_ty": pblntf_ty,  # A: 정기공시
-        "page_count": 10,
+        "page_count": 2,
     }
     res = requests.get(DART_LIST_URL, params=params, timeout=10)
     res.raise_for_status()
