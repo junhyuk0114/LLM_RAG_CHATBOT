@@ -16,3 +16,12 @@ Thumbs.db
 # IDE
 .idea/
 .vscode/
+.classpath
+.project
+.settings/
+
+# Spring DB 접속 정보 (민감 정보 - 절대 커밋 금지)
+db.properties
+
+# Maven 빌드 결과물
+target/

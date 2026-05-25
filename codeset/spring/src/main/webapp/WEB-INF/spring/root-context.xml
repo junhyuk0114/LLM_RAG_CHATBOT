@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+           http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!-- DB 접속 정보 (db.properties) -->
+    <context:property-placeholder location="classpath:db.properties"/>
+
+    <!-- DataSource -->
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="${jdbc.driver}"/>
+        <property name="url"             value="${jdbc.url}"/>
+        <property name="username"        value="${jdbc.username}"/>
+        <property name="password"        value="${jdbc.password}"/>
+    </bean>
+
+    <!-- RestTemplate (FastAPI 호출용) -->
+    <bean id="restTemplate" class="org.springframework.web.client.RestTemplate"/>
+
+</beans>

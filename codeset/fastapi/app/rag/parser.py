@@ -29,15 +29,29 @@ def fetch_report_list(corp_code: str, bgn_de: str, end_de: str, pblntf_ty: str =
 
 
 def fetch_document_text(rcept_no: str) -> str:
-    """공시 원문 XML에서 텍스트를 추출합니다."""
+    """공시 원문 ZIP을 다운로드하여 XML 텍스트를 추출합니다."""
+    import re, io, zipfile
+
     params = {"crtfc_key": DART_API_KEY, "rcept_no": rcept_no}
-    res = requests.get(DART_DOC_URL, params=params, timeout=15)
+    res = requests.get(DART_DOC_URL, params=params, timeout=30)
     res.raise_for_status()
-    # XML에서 태그 제거 후 순수 텍스트만 추출
-    import re
-    text = re.sub(r"<[^>]+>", " ", res.text)
-    text = re.sub(r"\s+", " ", text).strip()
-    return text
+
+    content = res.content
+    # DART document.xml은 ZIP 형식으로 반환됨
+    if content[:2] == b"PK":
+        texts = []
+        with zipfile.ZipFile(io.BytesIO(content)) as zf:
+            for name in zf.namelist():
+                if name.lower().endswith(".xml"):
+                    raw = zf.read(name).decode("utf-8", errors="ignore")
+                    text = re.sub(r"<[^>]+>", " ", raw)
+                    text = re.sub(r"\s+", " ", text).strip()
+                    if text:
+                        texts.append(text)
+        return " ".join(texts)
+    else:
+        text = re.sub(r"<[^>]+>", " ", res.text)
+        return re.sub(r"\s+", " ", text).strip()
 
 
 def parse_reports(corp_code: str, corp_name: str, bgn_de: str, end_de: str) -> list[dict]:
