@@ -1,0 +1,31 @@
+﻿src
+└── main
+    ├── java
+    │   └── com
+    │       └── kopo
+    │           └── chatbot
+    │               ├── controller
+    │               │   ├── ChatController.java
+    │               │   └── HomeController.java
+    │               ├── dao
+    │               │   └── ChatDAO.java
+    │               ├── dto
+    │               │   ├── ChatMessage.java
+    │               │   ├── ChatRequest.java
+    │               │   ├── ChatResponse.java
+    │               │   └── QueryRequest.java
+    │               └── service
+    │                   ├── ChatService.java
+    │                   └── ChatServiceImpl.java
+    ├── resources
+    │   └── db.properties
+    └── webapp
+        ├── resources
+        └── WEB-INF
+            ├── spring
+            │   ├── appServlet
+            │   │   └── servlet-context.xml
+            │   └── root-context.xml
+            ├── views
+            │   └── chat.jsp
+            └── web.xml
